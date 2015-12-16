@@ -59,7 +59,6 @@ public class NetUtil {
 		}
 		logger.info("getHttpConnection start! url: " + url);
 		HttpClient httpClient = new HttpClient();
-
 		Protocol myhttps = new Protocol("https",
 				new SSLProtocolSocketFactory(), 443);
 		Protocol.registerProtocol("https", myhttps);
@@ -99,9 +98,8 @@ public class NetUtil {
 		InputStream in = null;
 		ByteArrayOutputStream baos = null;
 		try {
-			method.setRequestHeader(
-					"Cookie",
-					"vc=vc-66bbb8f4-7d8c-44ed-8fab-4bb68fc66672; pgv_pvi=2366600192; ptui_loginuin=2531469653; RK=zQfnx2jMmW; p_luin=o0024818653; p_lskey=00040000842448938a4ae7547319ad71d883b00e2ba5451eb4ebd41209c7e1e44d184b6afdbcbf80a6da20fc; luin=o0024818653; lskey=000100000784e8ae7edd32e80435096501d42eac53bdb45084160c06b559440091e30b932681bf569d739f6d; ptcz=61459f4116df9a7680380992210c4ef572799d25b54cdf246a10ab26efaec4d3; pt2gguin=o0024818653; JSESSIONID=e1b13b4d-5a2c-4b7d-9936-38dfcd4131ca; pgv_si=s2486140928");
+			httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1800000);  
+			httpClient.getHttpConnectionManager().getParams().setSoTimeout(1800000);
 			int statusCode = httpClient.executeMethod(method);
 			if (statusCode != HttpStatus.SC_OK) {
 				logger.warn("getHttpConnection error! statusCode: "
@@ -228,6 +226,8 @@ public class NetUtil {
 		InputStream in = null;
 		ByteArrayOutputStream baos = null;
 		try {
+			httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1800000);  
+			httpClient.getHttpConnectionManager().getParams().setSoTimeout(1800000);
 			int statusCode = httpClient.executeMethod(method);
 			rspBean.setStatusCode(statusCode);
 			in = method.getResponseBodyAsStream();
